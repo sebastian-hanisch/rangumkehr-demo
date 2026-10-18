@@ -210,7 +210,7 @@ def verdict_triggers(rows: list[dict]) -> tuple[str, str]:
     return "warning", (f"Die Häufigkeit der Umkehr hängt am Auslöser, nicht nur am Verfahren: Bei einer dominierten Alternative kippt die Min-Max-Summe in {de(100 * mm_dom, 1)} % der Matrizen, "
                        f"die Perzentil-Summe in {de(100 * perz, 1)} %; bei einem Klon AHP verteilend in {de(100 * ahp, 1)} %; bei einem Ausreißer in einem Kriterium die Min-Max-Summe in "
                        f"{de(100 * mm_out['any'], 1)} % (Platz 1 der alten wechselt in {de(100 * mm_out['top'], 1)} %). Die feste Referenz kippt in keinem Protokoll "
-                       f"({de(100 * nom, 1)} %).")
+                       f"({de(100 * nom, 1)} %). Gezählt sind Matrizen mit mindestens einem gekippten Paar, bei {C.EXP_N} alten Alternativen und {C.EXP_M} Kriterien.")
 
 
 def verdict_sources(rows: list[dict]) -> tuple[str, str]:
@@ -232,13 +232,13 @@ def verdict_legitimacy(rows: list[dict]) -> tuple[str, str]:
     out = _row(rows, op="ausreisser_gut", method="sum_minmax")
     return "warning", (f"Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider: Bewertet er relativ zur Menge, kippt er {mm['decider_pairs']} Paare, und die Min-Max-Summe vollzieht "
                        f"{mm['followed']} davon mit; die übrigen Verfahren vollziehen {de(100 * lo, 1)} bis {de(100 * hi, 1)} % ihrer Kipper mit. Die feste Referenz kippt nichts und verpasst "
-                       f"alle {nom['missed']}. Hat der Entscheider einen festen Nutzen, verschlechtert ein Ausreißer die Ordnung: {out['away']} der {out['toward'] + out['away']} "
+                       f"alle {nom['missed']}. Hat der Entscheider einen festen Nutzen, verschlechtert ein Ausreißer die Ordnung der Min-Max-Summe: {out['away']} der {out['toward'] + out['away']} "
                        f"Kipper führen von ihr weg (Δτ {de(out['dtau'], 3)}).")
 
 
 def verdict_reference(ref: list[dict]) -> tuple[str, str]:
     cost = [_row(ref, method="sum_nom", world=w)["hit"] - _row(ref, method="sum_minmax", world=w)["hit"] for w in WORLDS[:3]]
     t_cost = [_row(ref, method="topsis_nom", world=w)["hit"] - _row(ref, method="topsis_mm", world=w)["hit"] for w in WORLDS[:3]]
-    return "info", (f"Die feste Referenz kostet bei der Summe {de(-100 * max(cost), 1)} bis {de(-100 * min(cost), 1)} Punkte Platz 1 in den drei Güte-Welten (Standardfehler 1,3 bis 3,5 Punkte), "
-                    f"bei TOPSIS {de(-100 * max(t_cost), 1)} bis {de(-100 * min(t_cost), 1)} Punkte. In der Rohwert-Welt ist sie per Definition richtig "
+    return "info", (f"Die feste Referenz verändert bei der Summe Platz 1 um {de(-100 * max(cost), 1)} bis {de(-100 * min(cost), 1)} Punkte in den drei Güte-Welten (nicht von Null unterscheidbar; "
+                    f"Standardfehler 1,3 bis 3,5 Punkte), bei TOPSIS um {de(-100 * max(t_cost), 1)} bis {de(-100 * min(t_cost), 1)} Punkte (nur in der Cobb-Douglas-Welt belastbar). In der Rohwert-Welt ist sie per Definition richtig "
                     "(der Entscheider ist auf der Nenn-Spannweite definiert); sie ist falsch für einen Entscheider, der relativ zur Menge bewertet.")

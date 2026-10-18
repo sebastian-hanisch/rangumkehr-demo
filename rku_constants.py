@@ -38,7 +38,7 @@ OPERATION_LABELS = {
     "dominiert": "Eine dominierte Alternative innerhalb der Spannweite",
     "klon": "Ein Klon einer alten Alternative",
     "ausreisser_gut": "Ein Ausreißer nach oben in einem Kriterium (+50 % Spannweite)",
-    "ausreisser_schlecht": "Ein Ausreißer nach unten in einem Kriterium (+50 % Spannweite)",
+    "ausreisser_schlecht": "Ein Ausreißer nach unten in einem Kriterium (50 % der Spannweite unter dem Minimum)",
 }
 OPERATION_SHORT = {"zufall": "zufällig", "dominiert": "dominiert", "klon": "Klon", "ausreisser_gut": "Ausreißer oben", "ausreisser_schlecht": "Ausreißer unten"}
 DEFAULT_OPERATION = "zufall"
@@ -80,7 +80,7 @@ PRESETS = {
     "Feste Referenz": {"n": 10, "m": 5, "method": "sum_nom", "op": "ausreisser_gut", "decider": "relativ", "frozen": "frei", "seed": 2},
 }
 PRESET_HELP = {
-    "Standardfall (Summe Min-Max, zufällig)": "10 alte Alternativen, 5 Kriterien, eine zufällige neue Alternative, Min-Max-Summe: ein Paar der alten Alternativen kippt, Platz 1 bleibt.",
+    "Standardfall (Summe Min-Max, zufällig)": "10 alte Alternativen, 5 Kriterien, eine zufällige neue Alternative, Min-Max-Summe: einige Paare der alten Alternativen kippen (hier 3 von 45), Platz 1 bleibt.",
     "Ausreißer": "Die neue Alternative hat in einem Kriterium einen Ausreißer: Die Spannweite wächst, die Min-Max-Summe gewichtet dieses Kriterium weniger, und Platz 1 der alten wechselt.",
     "Klon": "Ein Klon einer alten Alternative kommt dazu: Bei AHP mit Spalten auf Summe 1 ändert das jede Priorität; Platz 1 der alten wechselt, ohne dass sich ein Wert geändert hat.",
     "Ränge": "Eine dominierte Alternative innerhalb der Spannweite: Die Min-Max-Summe bleibt, aber die Perzentil-Ränge verschieben sich, und ein Paar kippt.",

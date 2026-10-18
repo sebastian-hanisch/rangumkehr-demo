@@ -76,7 +76,7 @@ def test_verdicts_name_their_numbers():
     kind, text = ev.verdict_legitimacy(proto)
     assert kind == "warning" and "entscheidet der Entscheider" in text and "verpasst" in text
     kind, text = ev.verdict_reference(ev.experiment_reference(seeds=C.SWEEP_SEEDS[:30]))
-    assert kind == "info" and "feste Referenz kostet" in text and "Rohwert-Welt" in text
+    assert kind == "info" and "feste Referenz verändert" in text and "Rohwert-Welt" in text
 
 
 # ----------------------------------------------------------------------------- Verdikte an von Hand gesetzten Zeilen (jede Zahl im Text)
@@ -129,14 +129,14 @@ def test_verdict_legitimacy_ranges_over_the_methods_that_flip_something():
     assert "verpasst alle 75" in text and "30 der 40 Kipper führen von ihr weg (Δτ -0,018)" in text
 
 
-def test_verdict_reference_gives_the_costs_in_points():
+def test_verdict_reference_gives_the_changes_in_points():
     rows = []
     hits = {"sum_minmax": (0.74, 0.74, 0.71), "sum_nom": (0.72, 0.73, 0.70), "topsis_mm": (0.635, 0.65, 0.635), "topsis_nom": (0.61, 0.605, 0.575)}
     for m, vals in hits.items():
         for w, v in zip(ev.WORLDS[:3], vals):
             rows.append({"method": m, "world": w, "hit": v, "se": 0.03})
     kind, text = ev.verdict_reference(rows)
-    assert kind == "info" and "bei der Summe 1,0 bis 2,0 Punkte" in text and "bei TOPSIS 2,5 bis 6,0 Punkte" in text
+    assert kind == "info" and "bei der Summe Platz 1 um 1,0 bis 2,0 Punkte" in text and "bei TOPSIS um 2,5 bis 6,0 Punkte" in text
 
 
 def test_direction_toward_and_away_for_the_relative_decider():

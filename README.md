@@ -3,7 +3,7 @@
 **[→ Demo live ausprobieren](https://sebastianhanisch-rangumkehr-demo.streamlit.app/)**
 
 Neuntes Stück der Linie **Mehrkriterien-Ranking** in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“, Kind von
-[AHP](https://github.com/sebastian-hanisch/ahp-demo), Idee von [TOPSIS](https://github.com/sebastian-hanisch/topsis-demo). Kommt eine Alternative dazu, ändern sich die Werte der
+[AHP](https://github.com/sebastian-hanisch/ahp-demo), Idee von [TOPSIS](https://github.com/sebastian-hanisch/topsis-demo). Kommt eine Alternative dazu, ändern sich die Rohwerte der
 alten nicht, ihre Ordnung untereinander aber vielleicht doch. Die Demo führt ein **Protokoll** aus (zufällige neue Alternative, dominierte, Klon, Ausreißer in einem Kriterium), zerlegt die
 **Ursache** (Konstanten der Menge gegen das Verfahren selbst) und fragt, **wann eine Umkehr ein Fehler ist**.
 
@@ -18,14 +18,15 @@ Alternative für sich gegen eine feste Referenz, kippt nie etwas. Die Kernfrage 
 ## Befunde und Korrekturen gegenüber dem Plan
 
 - **Die Häufigkeit der Umkehr hängt am Auslöser, nicht nur am Verfahren.** Die Min-Max-Summe kippt bei einer dominierten Alternative oder einem Klon nie (0,0 %), bei einem Ausreißer in einem
-  Kriterium in 88,5 % der Matrizen. Eine Tabelle „Verfahren gegen Umkehrquote“ ohne den Auslöser ist irreführend.
+  Kriterium bei n = 20, m = 5 in 88,5 % der Matrizen (mindestens ein Paar; bei n = 10 sind es 72 %). Eine Tabelle „Verfahren gegen Umkehrquote“ ohne den Auslöser ist irreführend.
 - **Die Ursache liegt in den Konstanten der Menge, in den Rängen oder in der Paarzählung.** Mit eingefrorenen Konstanten der alten Menge kippt bei Summe, TOPSIS und AHP in keinem Protokoll
   etwas; PROMETHEE und ELECTRE kippen weiter (Struktur des Verfahrens).
-- **Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider.** Bewertet er relativ zur Spannweite der Menge, vollzieht die Min-Max-Summe genau seine Kipper mit (75 von 75 Paare); alle
-  anderen Verfahren kippen weit mehr Paare, als er es tut. Die feste Referenz kippt nichts und verpasst alle 75. Bei einem festen Nutzen ist ein Ausreißer der einzige Auslöser, der die
-  Ordnung messbar verschlechtert (64 % der gekippten Paare der Min-Max-Summe weg vom Entscheider, Δτ −0,018).
-- **Ein „neuer Idealpunkt“ allein genügt nicht:** Eine Alternative, die in jedem Kriterium um denselben Anteil der Spannweite über allen liegt, kippt die Summe nicht; entscheidend ist die
-  ungleiche Änderung der Skalen.
+- **Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider.** Ein Entscheider, der per Definition wie die Min-Max-Summe der aktuellen Menge bewertet, wird von dieser vollständig nachvollzogen (75 von 75 Paare);
+  die meisten anderen Verfahren kippen weit mehr Paare, als er es tut (176 bis 429 gegen 75), ELECTRE (35) und AHP ideal (52) weniger, die Nenn-Verfahren keines. Die feste Referenz kippt nichts
+  und verpasst alle 75. Bei einem festen Nutzen verschlechtert nur der Ausreißer die Ordnung der Min-Max-Summe messbar (64 % der Kipper weg vom Entscheider, Δτ −0,018, klein); bei den anderen
+  drei Auslösern ist die Richtung Rauschen.
+- **Ein „neuer Idealpunkt“ allein genügt nicht:** Eine Alternative, die in jedem Kriterium um denselben Anteil der Spannweite über allen liegt, kippt die Min-Max-Summe (und die Perzentil-Summe) nicht; entscheidend ist die
+  ungleiche Änderung der Spannweiten.
 - **Entfernen ist Hinzufügen rückwärts:** dieselben Paare kippen; kein eigener Lauf.
 - **Die Experimente starten auf Klick** (rund 15 Sekunden), nicht beim Laden.
 
@@ -46,7 +47,7 @@ Formeln im 📐-Expander der App.
 
 1. **Dieselbe Matrix, dieselbe neue Alternative, alle Verfahren:** Vergleiche zwischen Verfahren sind gepaart.
 2. **Zerlegung durch Einfrieren:** frei gegen eingefroren trennt die Konstanten der Menge vom Verfahren selbst.
-3. **Zwei Entscheider:** fester Nutzen (jede Umkehr kippt ohne Grund) und relativer Nutzen (die Umkehr der Min-Max-Summe ist seine); Maß ist der Anteil der vom Entscheider mitvollzogenen
+3. **Zwei Entscheider:** fester Nutzen (Annahme: jede Umkehr kippt ohne Grund) und relativer Nutzen (die Umkehr der Min-Max-Summe ist seine); Maß ist der Anteil der vom Entscheider mitvollzogenen
    Kipper.
 4. **Gegenproben:** feste Referenz (nie eine Umkehr), dominierte Alternative und Klon bei Min-Max-Summe und AHP ideal (nie eine Umkehr).
 
@@ -89,7 +90,7 @@ unter etwa 6 Punkten sind nicht belastbar und stehen nicht als Aussage.**
 - **Randfälle** (`tests/test_edge_cases.py`): n = 2, Klon als Gleichstand, lauter gleiche Alternativen, konstante Spalte, Nullwerte bei AHP, Perzentil mit kleiner Referenz, leere Menge
   gekippter Paare, Ausreißer in genau einem Kriterium.
 - **Generator** (`tests/test_generator.py`): SplitMix64 gegen unabhängige Python-Fassung, Randverteilung, Spearman-Korrelation der Copula, Richtungen und Bereiche.
-- **Aussagen:** jede Zahl dieser README in `tests/test_claims.py`; Presets in `test_presets.py` (jedes zeigt seinen Effekt).
+- **Aussagen:** jede Tabellenzahl dieser README in `tests/test_claims.py`; Presets in `test_presets.py` (jedes zeigt seinen Effekt).
 - **Mutationstest** vor dem ersten Commit (`tools/mutate_demo.py` der Website): 184 Stellen, davon 16 durch wortgleiche Zeilen der Nachbar-Demos gesichert; erster Lauf 122 von 168 Mutanten gefangen (73 %), die Überlebenden waren fast alle Texte und Zählfelder der Verdikte und zwei unerreichbare Absicherungen gegen Teiler 0 (entfernt). Danach ist jede Stelle gefangen oder als äquivalent festgehalten (4: Vorzeichen der Richtung ±1, konstante Verschiebung des Rohwert-Nutzens, Gleichstände im Nettofluss); Stand in `tests/mutation_state.json`.
 - **Oberfläche:** AppTest-Rauchtest (jeder Button, jeder Regler am Minimum und Maximum), alle Presets, jedes Verfahren, jeder Auslöser, jeder Entscheider, Permalink, PDF und Experimente erst
   nach Klick, Footer, Laufzeit-Importe.

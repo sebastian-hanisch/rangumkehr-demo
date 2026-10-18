@@ -74,7 +74,7 @@ st.title("↕️ Rangumkehr: eine Alternative kommt dazu, die alte Ordnung kippt
 st.markdown(
     """
 **Eine Umkehr entsteht dort, wo ein Verfahren die Alternativen mit etwas bewertet, das aus der ganzen Menge berechnet wird: Normierungskonstanten, Ränge, Paarzählungen.** Dies ist das neunte
-Stück der Linie **Mehrkriterien-Ranking**: Kommt eine Alternative dazu, ändern sich die Werte der alten nicht, ihre Ordnung untereinander aber vielleicht doch. Die Demo führt ein
+Stück der Linie **Mehrkriterien-Ranking**: Kommt eine Alternative dazu, ändern sich die Rohwerte der alten nicht, ihre Ordnung untereinander aber vielleicht doch. Die Demo führt ein
 **Protokoll** aus (zufällige neue Alternative, dominierte, Klon, Ausreißer), zerlegt die Ursache (Konstanten der Menge gegen das Verfahren selbst) und fragt, **wann eine Umkehr ein Fehler
 ist**: Das entscheidet der Entscheider, nicht das Verfahren. Der Entscheider ist simuliert.
 
@@ -90,9 +90,9 @@ with st.expander("So funktioniert die Umkehr", expanded=True):
 2. **Drei Ursachen:** *Konstanten der Menge* (Min-Max-Grenzen, Mittel und Streuung, Vektornorm, Spaltensumme, Ideal), *Ränge* (die Perzentil-Summe ist Borda) und *Paarzählung*
    (PROMETHEE, ELECTRE). Mit **eingefrorenen** Konstanten der alten Menge verschwindet die erste Ursache: Was dann noch kippt, kommt aus dem Verfahren selbst.
 3. **Feste Referenz:** Die Nenn-Spannweite bewertet jede Alternative für sich; es kippt nie etwas.
-4. **Fehler oder nicht:** Ein Entscheider mit **festem Nutzen** ändert seine Ordnung nie; jede Umkehr kippt dann ohne Grund. Ein Entscheider, der **relativ** zur vorhandenen Spannweite
+4. **Fehler oder nicht:** Ein Entscheider mit **festem Nutzen** (Annahme der Demo) ändert seine Ordnung nicht; jede Umkehr kippt dann ohne Grund. Ein Entscheider, der **relativ** zur vorhandenen Spannweite
    bewertet, kippt selbst, wenn die Spannweite sich ändert: Für ihn ist die Umkehr der Min-Max-Summe richtig.
-5. **Auslöser:** Die Häufigkeit hängt am Auslöser. Eine dominierte Alternative lässt die Min-Max-Summe unberührt; ein Ausreißer in einem Kriterium kippt sie in fast jeder Matrix.
+5. **Auslöser:** Die Häufigkeit hängt am Auslöser. Eine dominierte Alternative lässt die Min-Max-Summe unberührt; ein Ausreißer in einem Kriterium kippt sie bei 20 alten Alternativen in neun von zehn, bei 10 in sieben von zehn Matrizen.
         """
     )
 
@@ -189,7 +189,7 @@ else:
                   + str(int(a.fixed.flipped.sum())) + ": Das Verfahren zählt selbst gegen die anderen Alternativen."))
     if settings.decider == "fest":
         st.caption(f"Der Entscheider hat einen festen Nutzen: {a.toward} der gekippten Paare führen zu seiner Ordnung hin, {a.away} von ihr weg. Im Mittel ist das Rauschen; ein Ausreißer "
-                   "verschlechtert die Ordnung (Experiment 3).")
+                   "verschlechtert die Ordnung bei mengenabhängigen Min-Max-Normierungen (Experiment 3), nicht bei allen Verfahren.")
     else:
         st.caption(f"Der Entscheider bewertet relativ zur Menge und kippt selbst {int(a.decider_flipped.sum())} Paare; von den {int(o.flipped.sum())} gekippten Paaren des Verfahrens folgen "
                    f"{a.toward} seiner neuen Ordnung und {a.away} nicht.")
@@ -227,7 +227,7 @@ if exp:
     st.markdown("**Richtung gegenüber dem festen Entscheider bei einem Ausreißer in einem Kriterium** (gekippte Paare zum Entscheider hin / von ihm weg)")
     st.dataframe(direction_table(proto, "ausreisser_gut"), hide_index=True, width="stretch")
 
-    st.markdown("### Experiment 4: Was die feste Referenz kostet")
+    st.markdown("### Experiment 4: Was die feste Referenz verändert")
     st.caption("Platz 1 getroffen in vier Welten (Güte/linear, konkav, Cobb-Douglas, Rohwerte; in der Rohwert-Welt ist die Nenn-Spannweite per Definition richtig), daneben Umkehr gegen Qualität "
                "und der Einfluss von n.")
     verdict(verdict_reference(exp["reference"]))
@@ -267,11 +267,11 @@ AHP verteilend: $x_{ij} / \sum_k x_{kj}$, AHP ideal: $x_{ij} / \max_k x_{kj}$; P
 bleiben für die neue Menge (die Wertung der neuen Alternative bezieht sich auf sie).
 
 **Wann kippt nichts.** Wird jede Alternative $i$ durch eine Funktion $f(x_i)$ bewertet, die nur von $x_i$ und festen Konstanten abhängt, ändert eine neue Alternative keine Wertung der alten:
-Es kippt nie ein Paar (Nenn-Spannweite, eingefrorene Konstanten bei Summe, TOPSIS und AHP). Mit der Min-Max-Summe ändert eine neue Alternative die Ordnung genau dann, wenn sie die
-Grenzen eines Kriteriums verschiebt und dadurch das wirksame Gewicht $w_j / (\max_k x_{kj} - \min_k x_{kj})$ je Kriterium ungleich ändert.
+Es kippt nie ein Paar (Nenn-Spannweite, eingefrorene Konstanten bei Summe, TOPSIS und AHP). Mit der Min-Max-Summe kann eine neue Alternative die Ordnung nur ändern, wenn sie die
+Grenzen eines Kriteriums so verschiebt, dass sich die wirksamen Gewichte $w_j / (\max_k x_{kj} - \min_k x_{kj})$ ungleich ändern; ob ein Paar wirklich kippt, hängt von den Werten ab.
 
 **Borda und Paarzählung.** Die Perzentil-Summe ist (bis auf Gleichstände) die gewichtete Borda-Zählung, und PROMETHEE mit der gewöhnlichen Funktion ist gleich ihr: Eine neue Alternative
-zwischen zwei alten in einem Kriterium ändert deren Rangdifferenz dort um 1 und damit die Gesamtwertung. Die Copeland-Zahl ändert sich mit jedem Paarvergleich der neuen Alternative.
+zwischen zwei alten in einem Kriterium ändert deren Rangdifferenz dort um 1 und damit die Gesamtwertung. Die Copeland-Zahl einer alten Alternative ändert sich um 1, wenn die neue Alternative sie übertrifft oder von ihr übertroffen wird.
 
 **Entscheider.** Fest: $u_i = \sum_j w_j g_{ij}$ (Güte), unabhängig von der Menge. Relativ: $u_i = \sum_j w_j\, n_{ij}$ mit der Min-Max-Normierung der aktuellen Menge, ändert sich mit ihr.
 Ein Kipper des Verfahrens heißt *mitvollzogen*, wenn auch der Nutzen des Entscheiders das Paar umkehrt, *verpasst*, wenn nur der Entscheider es umkehrt.
