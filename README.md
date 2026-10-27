@@ -18,12 +18,12 @@ Alternative für sich gegen eine feste Referenz, kippt nie etwas. Die Kernfrage 
 ## Befunde und Korrekturen gegenüber dem Plan
 
 - **Die Häufigkeit der Umkehr hängt am Auslöser, nicht nur am Verfahren.** Die Min-Max-Summe kippt bei einer dominierten Alternative oder einem Klon nie (0,0 %), bei einem Ausreißer in einem
-  Kriterium bei n = 20, m = 5 in 88,5 % der Matrizen (mindestens ein Paar; bei n = 10 sind es 72 %). Eine Tabelle „Verfahren gegen Umkehrquote“ ohne den Auslöser ist irreführend.
+  Kriterium bei n = 20, m = 5 in 88,5 % der Matrizen (mindestens ein Paar). Eine Tabelle „Verfahren gegen Umkehrquote“ ohne den Auslöser ist irreführend.
 - **Die Ursache liegt in den Konstanten der Menge, in den Rängen oder in der Paarzählung.** Mit eingefrorenen Konstanten der alten Menge kippt bei Summe, TOPSIS und AHP in keinem Protokoll
   etwas; PROMETHEE und ELECTRE kippen weiter (Struktur des Verfahrens).
 - **Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider.** Ein Entscheider, der per Definition wie die Min-Max-Summe der aktuellen Menge bewertet, wird von dieser vollständig nachvollzogen (75 von 75 Paare);
   die meisten anderen Verfahren kippen weit mehr Paare, als er es tut (176 bis 429 gegen 75), ELECTRE (35) und AHP ideal (52) weniger, die Nenn-Verfahren keines. Die feste Referenz kippt nichts
-  und verpasst alle 75. Bei einem festen Nutzen verschlechtert nur der Ausreißer die Ordnung der Min-Max-Summe messbar (64 % der Kipper weg vom Entscheider, Δτ −0,018, klein); bei den anderen
+  und verpasst alle 75. Bei einem festen Nutzen verschlechtert der Ausreißer die Ordnung der Min-Max-Summe messbar (64 % der Kipper weg vom Entscheider, Δτ −0,018, klein) und die von AHP ideal (65,4 % weg); bei den anderen
   drei Auslösern ist die Richtung Rauschen.
 - **Ein „neuer Idealpunkt“ allein genügt nicht:** Eine Alternative, die in jedem Kriterium um denselben Anteil der Spannweite über allen liegt, kippt die Min-Max-Summe (und die Perzentil-Summe) nicht; entscheidend ist die
   ungleiche Änderung der Spannweiten.

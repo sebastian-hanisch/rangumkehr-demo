@@ -82,6 +82,19 @@ Weiter unten: vier Experimente (**🔬**), **🚧 Wo die Annahmen enden** und de
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/rangumkehr-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Stellen Sie sich eine Auswahl vor, bei der mehrere Alternativen nach mehreren Kriterien bewertet werden. Kommt eine weitere Alternative dazu, ändern sich die Werte der alten nicht. Ihre Reihenfolge untereinander kann trotzdem kippen, nämlich dann, wenn das Verfahren mit etwas rechnet, das aus der ganzen Menge stammt: dem kleinsten und größten Wert eines Kriteriums, den Rängen oder dem Vergleich Paar um Paar.
+
+Die Demo spielt das mit erzeugten Entscheidungstabellen durch. Sie zeigt, welche neue Alternative eine Umkehr auslöst (eine dominierte, ein Klon, ein Ausreißer), ob die Ursache in den Konstanten der Menge oder im Verfahren selbst liegt und wann eine Umkehr ein Fehler ist. Das entscheidet ein simulierter Entscheider, nicht das Verfahren.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/rangumkehr-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So funktioniert die Umkehr", expanded=True):
     st.markdown(
         """
@@ -92,7 +105,7 @@ with st.expander("So funktioniert die Umkehr", expanded=True):
 3. **Feste Referenz:** Die Nenn-Spannweite bewertet jede Alternative für sich; es kippt nie etwas.
 4. **Fehler oder nicht:** Ein Entscheider mit **festem Nutzen** (Annahme der Demo) ändert seine Ordnung nicht; jede Umkehr kippt dann ohne Grund. Ein Entscheider, der **relativ** zur vorhandenen Spannweite
    bewertet, kippt selbst, wenn die Spannweite sich ändert: Für ihn ist die Umkehr der Min-Max-Summe richtig.
-5. **Auslöser:** Die Häufigkeit hängt am Auslöser. Eine dominierte Alternative lässt die Min-Max-Summe unberührt; ein Ausreißer in einem Kriterium kippt sie bei 20 alten Alternativen in neun von zehn, bei 10 in sieben von zehn Matrizen.
+5. **Auslöser:** Die Häufigkeit hängt am Auslöser. Eine dominierte Alternative lässt die Min-Max-Summe unberührt; ein Ausreißer in einem Kriterium kippt sie bei 20 alten Alternativen und 5 Kriterien in 88,5 % der Matrizen (mindestens ein Paar).
         """
     )
 
@@ -189,7 +202,7 @@ else:
                   + str(int(a.fixed.flipped.sum())) + ": Das Verfahren zählt selbst gegen die anderen Alternativen."))
     if settings.decider == "fest":
         st.caption(f"Der Entscheider hat einen festen Nutzen: {a.toward} der gekippten Paare führen zu seiner Ordnung hin, {a.away} von ihr weg. Im Mittel ist das Rauschen; ein Ausreißer "
-                   "verschlechtert die Ordnung bei mengenabhängigen Min-Max-Normierungen (Experiment 3), nicht bei allen Verfahren.")
+                   "verschlechtert die Ordnung bei der Min-Max-Summe und bei AHP ideal (Experiment 3), nicht bei allen Verfahren.")
     else:
         st.caption(f"Der Entscheider bewertet relativ zur Menge und kippt selbst {int(a.decider_flipped.sum())} Paare; von den {int(o.flipped.sum())} gekippten Paaren des Verfahrens folgen "
                    f"{a.toward} seiner neuen Ordnung und {a.away} nicht.")
@@ -257,6 +270,26 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/rangumkehr-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind $n$ alte Alternativen, die nach $m$ Kriterien gemessen sind, und eine neue Alternative. Gesucht ist, ob zwei alte Alternativen nach dem Zusatz in entgegengesetzter Reihenfolge stehen, obwohl sich an ihren Werten nichts geändert hat.
+
+| Symbol | Bedeutung |
+|---|---|
+| $x_{ij}$ | Rohwert der Alternative $i$ im Kriterium $j$ |
+| $w_j$ | Gewicht des Kriteriums $j$ |
+| $s_i$, $s'_i$ | Wertung der alten Alternative $i$ vor bzw. nach dem Zusatz der neuen |
+| $n_{ij}$ | mit der Min-Max-Normierung auf das Intervall von null bis eins gebrachter Wert $x_{ij}$ |
+| $\min_k x_{kj}$, $\max_k x_{kj}$ | kleinster und größter Wert des Kriteriums $j$ in der Menge (Konstanten der Menge) |
+| $\mu_j$, $\sigma_j$ | Mittelwert und Standardabweichung des Kriteriums $j$ in der Menge |
+| $g_{ij}$ | Güte der Alternative $i$ im Kriterium $j$ (feste Nutzenwerte des Entscheiders, unabhängig von der Menge) |
+| $u_i$ | Nutzen der Alternative $i$ für den simulierten Entscheider |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/rangumkehr-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Gekipptes Paar.** Wertungen $s_i$ auf der alten Menge, $s'_i$ auf der Menge mit der neuen Alternative, $i, j$ alt. Das Paar $\{i, j\}$ ist gekippt, wenn
