@@ -23,7 +23,7 @@ Alternative für sich gegen eine feste Referenz, kippt nie etwas. Die Kernfrage 
   etwas; PROMETHEE und ELECTRE kippen weiter (Struktur des Verfahrens).
 - **Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider.** Ein Entscheider, der per Definition wie die Min-Max-Summe der aktuellen Menge bewertet, wird von dieser vollständig nachvollzogen (75 von 75 Paare);
   die meisten anderen Verfahren kippen weit mehr Paare, als er es tut (176 bis 429 gegen 75), ELECTRE (35) und AHP ideal (52) weniger, die Nenn-Verfahren keines. Die feste Referenz kippt nichts
-  und verpasst alle 75. Bei einem festen Nutzen verschlechtert der Ausreißer die Ordnung der Min-Max-Summe messbar (64 % der Kipper weg vom Entscheider, Δτ −0,018, klein) und die von AHP ideal (65,4 % weg); bei den anderen
+  und verpasst alle 75. Bei einem festen Nutzen verschlechtert der Ausreißer die Ordnung der Min-Max-Summe messbar (64 % der gekippten Paare weg vom Entscheider, Δτ −0,018, klein) und die von AHP ideal (65,4 % weg); bei den anderen
   drei Auslösern ist die Richtung Rauschen.
 - **Ein „neuer Idealpunkt“ allein genügt nicht:** Eine Alternative, die in jedem Kriterium um denselben Anteil der Spannweite über allen liegt, kippt die Min-Max-Summe (und die Perzentil-Summe) nicht; entscheidend ist die
   ungleiche Änderung der Spannweiten.
@@ -48,7 +48,7 @@ Formeln im 📐-Expander der App.
 1. **Dieselbe Matrix, dieselbe neue Alternative, alle Verfahren:** Vergleiche zwischen Verfahren sind gepaart.
 2. **Zerlegung durch Einfrieren:** frei gegen eingefroren trennt die Konstanten der Menge vom Verfahren selbst.
 3. **Zwei Entscheider:** fester Nutzen (Annahme: jede Umkehr kippt ohne Grund) und relativer Nutzen (die Umkehr der Min-Max-Summe ist seine); Maß ist der Anteil der vom Entscheider mitvollzogenen
-   Kipper.
+   Rangumkehren.
 4. **Gegenproben:** feste Referenz (nie eine Umkehr), dominierte Alternative und Klon bei Min-Max-Summe und AHP ideal (nie eine Umkehr).
 
 ## Befunde (gemessen, keine Behauptungen)

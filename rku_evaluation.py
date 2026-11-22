@@ -106,7 +106,7 @@ def _direction_relative(out: pr.Outcome, u_old: np.ndarray, u_new: np.ndarray) -
 
 def experiment_protocol(ops=C.EXP_OPS, n=C.EXP_N, m=C.EXP_M, seeds=C.SWEEP_SEEDS, methods=C.METHODS) -> list[dict]:
     """Je Auslöser und Verfahren: Matrizen mit gekipptem Paar, Anteil gekippter alter Paare, Platz 1 der alten wechselt (frei und mit eingefrorenen Konstanten);
-    Richtung der Kipper gegen den festen Entscheider; Paare, die der relative Entscheider selbst kippt und das Verfahren mitvollzieht."""
+    Richtung der gekippten Paare gegen den festen Entscheider; Paare, die der relative Entscheider selbst kippt und das Verfahren mitvollzieht."""
     rows = []
     for op in ops:
         acc = {k: {f: [] for f in ("any", "share", "top", "any_f", "share_f", "top_f", "toward", "away", "dtau", "m", "both", "m_only", "d_only")} for k in methods}
@@ -231,9 +231,9 @@ def verdict_legitimacy(rows: list[dict]) -> tuple[str, str]:
     nom = _row(rows, op="zufall", method="sum_nom")
     out = _row(rows, op="ausreisser_gut", method="sum_minmax")
     return "warning", (f"Ob eine Umkehr ein Fehler ist, entscheidet der Entscheider: Bewertet er relativ zur Menge, kippt er {mm['decider_pairs']} Paare, und die Min-Max-Summe vollzieht "
-                       f"{mm['followed']} davon mit; die übrigen Verfahren vollziehen {de(100 * lo, 1)} bis {de(100 * hi, 1)} % ihrer Kipper mit. Die feste Referenz kippt nichts und verpasst "
+                       f"{mm['followed']} davon mit; die übrigen Verfahren vollziehen {de(100 * lo, 1)} bis {de(100 * hi, 1)} % ihrer gekippten Paare mit. Die feste Referenz kippt nichts und verpasst "
                        f"alle {nom['missed']}. Hat der Entscheider einen festen Nutzen, verschlechtert ein Ausreißer die Ordnung der Min-Max-Summe: {out['away']} der {out['toward'] + out['away']} "
-                       f"Kipper führen von ihr weg (Δτ {de(out['dtau'], 3)}).")
+                       f"gekippten Paare führen von ihr weg (Δτ {de(out['dtau'], 3)}).")
 
 
 def verdict_reference(ref: list[dict]) -> tuple[str, str]:

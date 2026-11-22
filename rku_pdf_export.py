@@ -32,7 +32,7 @@ def build_pdf(a: Analysis) -> bytes:
                             f"Entscheider: {C.DECIDER_LABELS[s.decider]}. Konstanten: {C.FROZEN_LABELS[s.frozen]}. Seed {s.seed}. Alles simuliert."), new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
     pdf.multi_cell(0, 5, _s(f"Platz 1 der alten Alternativen: vorher {names[o.top_old]}, nachher {names[o.top_new]}. Gekippte alte Paare: {int(o.flipped.sum())} "
-                            f"(zum Entscheider hin: {a.toward}, von ihm weg: {a.away}). Kipper des Entscheiders selbst: {int(a.decider_flipped.sum())}."), new_x="LMARGIN", new_y="NEXT")
+                            f"(zum Entscheider hin: {a.toward}, von ihm weg: {a.away}). Rangumkehr des Entscheiders selbst: {int(a.decider_flipped.sum())}."), new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
     pdf.set_font("Helvetica", "B", 9)
     pdf.cell(0, 6, _s("Verfahren im Vergleich (gekippte Paare, Platz 1 vorher / nachher)"), new_x="LMARGIN", new_y="NEXT")

@@ -125,8 +125,8 @@ def test_verdict_legitimacy_ranges_over_the_methods_that_flip_something():
     kind, text = ev.verdict_legitimacy(rows)
     assert kind == "warning"
     assert "kippt er 75 Paare, und die Min-Max-Summe vollzieht 75 davon mit" in text
-    assert "vollziehen 2,0 bis 25,0 % ihrer Kipper mit" in text
-    assert "verpasst alle 75" in text and "30 der 40 Kipper führen von ihr weg (Δτ -0,018)" in text
+    assert "vollziehen 2,0 bis 25,0 % ihrer gekippten Paare mit" in text
+    assert "verpasst alle 75" in text and "30 der 40 gekippten Paare führen von ihr weg (Δτ -0,018)" in text
 
 
 def test_verdict_reference_gives_the_changes_in_points():
@@ -159,7 +159,7 @@ def test_verdict_legitimacy_counts_a_method_with_exactly_one_flipped_pair():
                         ("zufall", "prom_v"): {"flipped_pairs": 1, "followed": 1, "decider_pairs": 75, "missed": 74},
                         ("zufall", "sum_perz"): {"flipped_pairs": 100, "followed": 10, "decider_pairs": 75, "missed": 65},
                         ("zufall", "sum_nom"): {"missed": 75, "decider_pairs": 75}})
-    assert "vollziehen 10,0 bis 100,0 % ihrer Kipper mit" in ev.verdict_legitimacy(rows)[1]
+    assert "vollziehen 10,0 bis 100,0 % ihrer gekippten Paare mit" in ev.verdict_legitimacy(rows)[1]
 
 
 def test_topsis_on_minmax_by_hand_and_without_division_by_zero():

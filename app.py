@@ -100,7 +100,7 @@ with st.expander("So funktioniert die Umkehr", expanded=True):
         """
 1. **Protokoll:** n alte Alternativen, eine kommt dazu. Verglichen wird die Ordnung der **alten** Alternativen untereinander vorher und nachher; ein Paar ist *gekippt*, wenn es in beiden
    Ordnungen strikt, aber entgegengesetzt geordnet ist.
-2. **Drei Ursachen:** *Konstanten der Menge* (Min-Max-Grenzen, Mittel und Streuung, Vektornorm, Spaltensumme, Ideal), *Ränge* (die Perzentil-Summe ist Borda) und *Paarzählung*
+2. **Drei Ursachen:** *Konstanten der Menge* (Min-Max-Grenzen, Mittelwert und Standardabweichung, Vektornorm, Spaltensumme, Ideal), *Ränge* (die Perzentil-Summe ist Borda) und *Paarzählung*
    (PROMETHEE, ELECTRE). Mit **eingefrorenen** Konstanten der alten Menge verschwindet die erste Ursache: Was dann noch kippt, kommt aus dem Verfahren selbst.
 3. **Feste Referenz:** Die Nenn-Spannweite bewertet jede Alternative für sich; es kippt nie etwas.
 4. **Fehler oder nicht:** Ein Entscheider mit **festem Nutzen** (Annahme der Demo) ändert seine Ordnung nicht; jede Umkehr kippt dann ohne Grund. Ein Entscheider, der **relativ** zur vorhandenen Spannweite
@@ -156,7 +156,7 @@ c2.metric("Gekippte alte Paare", f"{int(o.flipped.sum())} von {pairs_total}", de
           help="Paare der alten Alternativen, die vorher und nachher strikt, aber entgegengesetzt geordnet sind.")
 c3.metric("Mit eingefrorenen Konstanten", f"{int(a.fixed.flipped.sum())} gekippt", delta=f"frei: {int(a.free.flipped.sum())}; was bleibt, liegt im Verfahren", delta_color="off",
           help="Gekippte Paare, wenn die Normierungskonstanten der alten Menge beibehalten werden: Was bleibt, kommt nicht aus den Konstanten, sondern aus dem Verfahren.")
-c4.metric("Kipper des Entscheiders", f"{int(a.decider_flipped.sum())} Paare", delta=f"Verfahren: {a.toward} hin, {a.away} weg", delta_color="off",
+c4.metric("Rangumkehren des Entscheiders", f"{int(a.decider_flipped.sum())} Paare", delta=f"Verfahren: {a.toward} hin, {a.away} weg", delta_color="off",
           help="Paare, die der gewählte Entscheider selbst kippt (nur beim relativen Entscheider möglich), und die gekippten Paare des Verfahrens nach ihrer Richtung.")
 
 left, right = st.columns([3, 2])
@@ -234,7 +234,7 @@ if exp:
 
     st.markdown("### Experiment 3: Wann ist eine Umkehr ein Fehler")
     st.caption("Der relative Entscheider kippt Paare, wenn sich die Spannweite ändert; gezählt werden die gekippten Paare des Verfahrens, die er mitvollzieht, die ohne ihn und seine "
-               "Kipper, die das Verfahren verpasst (zufällige neue Alternative). Darunter die Richtung gegenüber dem festen Entscheider.")
+               "Rangumkehren, die das Verfahren verpasst (zufällige neue Alternative). Darunter die Richtung gegenüber dem festen Entscheider.")
     verdict(verdict_legitimacy(proto))
     st.dataframe(legitimacy_table(proto, "zufall"), hide_index=True, width="stretch")
     st.markdown("**Richtung gegenüber dem festen Entscheider bei einem Ausreißer in einem Kriterium** (gekippte Paare zum Entscheider hin / von ihm weg)")
@@ -307,7 +307,7 @@ Grenzen eines Kriteriums so verschiebt, dass sich die wirksamen Gewichte $w_j / 
 zwischen zwei alten in einem Kriterium ändert deren Rangdifferenz dort um 1 und damit die Gesamtwertung. Die Copeland-Zahl einer alten Alternative ändert sich um 1, wenn die neue Alternative sie übertrifft oder von ihr übertroffen wird.
 
 **Entscheider.** Fest: $u_i = \sum_j w_j g_{ij}$ (Güte), unabhängig von der Menge. Relativ: $u_i = \sum_j w_j\, n_{ij}$ mit der Min-Max-Normierung der aktuellen Menge, ändert sich mit ihr.
-Ein Kipper des Verfahrens heißt *mitvollzogen*, wenn auch der Nutzen des Entscheiders das Paar umkehrt, *verpasst*, wenn nur der Entscheider es umkehrt.
+Eine Rangumkehr des Verfahrens heißt *mitvollzogen*, wenn auch der Nutzen des Entscheiders das Paar umkehrt, *verpasst*, wenn nur der Entscheider es umkehrt.
 
 **Literatur:** Die Rangumkehr in der Mehrkriterien-Analyse wurde für AHP von Belton und Gear (1983) beschrieben; Titel und Fundstellen sind hier nicht im Original geprüft und deshalb
 nicht angegeben.

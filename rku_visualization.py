@@ -154,7 +154,7 @@ def legitimacy_table(rows: list[dict], op: str = "zufall") -> pd.DataFrame:
             continue
         m = r["flipped_pairs"]
         out.append({"Verfahren": C.METHOD_SHORT[r["method"]], "gekippte Paare": m, "vom relativen Entscheider mitvollzogen": f"{r['followed']} ({de(100 * r['followed'] / m, 1)} %)" if m else "-",
-                    "ohne den Entscheider": r["unfollowed"], "Kipper des Entscheiders verpasst": r["missed"]})
+                    "ohne den Entscheider": r["unfollowed"], "Rangumkehren des Entscheiders verpasst": r["missed"]})
     return pd.DataFrame(out)
 
 

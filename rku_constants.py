@@ -8,7 +8,7 @@ METHODS = ("sum_minmax", "sum_perz", "sum_z", "sum_vec", "sum_nom", "topsis_vec"
 METHOD_LABELS = {
     "sum_minmax": "Summe, Min-Max (Grenzen der Menge)",
     "sum_perz": "Summe, Perzentil-Ränge (Ränge in der Menge)",
-    "sum_z": "Summe, z-Wert (Mittel und Streuung der Menge)",
+    "sum_z": "Summe, z-Wert (Mittelwert und Standardabweichung der Menge)",
     "sum_vec": "Summe, Vektor-Normierung (Norm der Menge)",
     "sum_nom": "Summe, Nenn-Spannweite (feste Referenz)",
     "topsis_vec": "TOPSIS, Vektor-Normierung, Ideal der Stichprobe",
@@ -84,5 +84,5 @@ PRESET_HELP = {
     "Ausreißer": "Die neue Alternative hat in einem Kriterium einen Ausreißer: Die Spannweite wächst, die Min-Max-Summe gewichtet dieses Kriterium weniger, und Platz 1 der alten wechselt.",
     "Klon": "Ein Klon einer alten Alternative kommt dazu: Bei AHP mit Spalten auf Summe 1 ändert das jede Priorität; Platz 1 der alten wechselt, ohne dass sich ein Wert geändert hat.",
     "Ränge": "Eine dominierte Alternative innerhalb der Spannweite: Die Min-Max-Summe bleibt, aber die Perzentil-Ränge verschieben sich, und ein Paar kippt.",
-    "Feste Referenz": "Nenn-Spannweite als feste Referenz: Nichts kippt. Bewertet der Entscheider aber relativ zur Menge, verpasst das Verfahren seine Kipper.",
+    "Feste Referenz": "Nenn-Spannweite als feste Referenz: Nichts kippt. Bewertet der Entscheider aber relativ zur Menge, verpasst das Verfahren seine Rangumkehren.",
 }
